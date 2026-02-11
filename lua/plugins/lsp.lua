@@ -17,9 +17,10 @@ return {
             ensure_installed = { "ts_ls" },
         })
         
-        -- Get capabilities for nvim-cmp
-        local capabilities = require("cmp_nvim_lsp").default_capabilities()
-        
+	-- Get capabilities for nvim-cmp
+	local capabilities = require("cmp_nvim_lsp").default_capabilities()
+	capabilities.textDocument.completion.completionItem.snippetSupport = true
+
         -- Setup TypeScript/JavaScript LSP using the new API
         vim.lsp.config("ts_ls", {
             capabilities = capabilities,
