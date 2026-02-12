@@ -12,7 +12,7 @@ return {
       -- C# formatting
       cs = { "csharpier" },
     },
-    
+
     -- Format on save
     format_on_save = {
       timeout_ms = 500,
