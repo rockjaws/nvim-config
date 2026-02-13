@@ -1,95 +1,69 @@
 return {
-    "hrsh7th/nvim-cmp",
-    dependencies = {
-        "hrsh7th/cmp-nvim-lsp",
-        "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-path",
-    },
-    config = function()
-        local cmp = require("cmp")
-        cmp.setup({
-            preselect = cmp.PreselectMode.Item,
-            completion = { 
-                completeopt = "menu,menuone,noinsert",
-            },
-            window = { 
-                documentation = cmp.config.window.bordered(),
-                completion = cmp.config.window.bordered({
-                    max_height = 10,
-                }),
-            },
-            sorting = {
-                priority_weight = 2,
-                comparators = {
-                    cmp.config.compare.locality,
-                    cmp.config.compare.recently_used,
-                    cmp.config.compare.score,
-                    cmp.config.compare.offset,
-                    cmp.config.compare.exact,
-                    cmp.config.compare.scopes,
-                    cmp.config.compare.kind,
-                    cmp.config.compare.sort_text,
-                    cmp.config.compare.length,
-                    cmp.config.compare.order,
+    "saghen/blink.cmp",
+    dependencies = "rafamadriz/friendly-snippets",
+    version = "*",
+    opts = {
+        keymap = {
+            preset = "default",
+            ["<CR>"] = { "accept", "fallback" },
+            ["<Tab>"] = { "select_next", "fallback" },
+            ["<S-Tab>"] = { "select_prev", "fallback" },
+        },
+        
+        appearance = {
+            use_nvim_cmp_as_default = true,
+            nerd_font_variant = "mono",
+        },
+        
+        completion = {
+            accept = {
+                auto_brackets = {
+                    enabled = true,
                 },
             },
-            matching = {
-                disallow_fuzzy_matching = false,
-                disallow_partial_matching = false,
-                disallow_prefix_unmatching = true,
+            menu = {
+                max_height = 10,
+                border = "rounded",
+                scrollbar = true,
             },
-            performance = {
-                max_view_entries = 10,
+            documentation = {
+                auto_show = true,
+                auto_show_delay_ms = 200,
+                window = {
+                    border = "rounded",
+                },
             },
-            mapping = cmp.mapping.preset.insert({
-                ["<CR>"] = cmp.mapping.confirm({ select = false }),
-                ["<C-e>"] = cmp.mapping.abort(),
-                ["<C-Space>"] = cmp.mapping.complete(),
-                ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-                ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-                ["<C-f>"] = cmp.mapping.scroll_docs(4),
-                ["<C-u>"] = cmp.mapping.scroll_docs(-4),
-                ["<Tab>"] = cmp.mapping(function(fallback)
-                    if cmp.visible() then
-                        cmp.select_next_item()
-                    else
-                        fallback()
-                    end
-                end, { "i", "s" }),
-                ["<S-Tab>"] = cmp.mapping(function(fallback)
-                    if cmp.visible() then
-                        cmp.select_prev_item()
-                    else
-                        fallback()
-                    end
-                end, { "i", "s" }),
-            }),
-            sources = cmp.config.sources({
-                { 
-                    name = "nvim_lsp",
-                    priority = 1000,
-                    entry_filter = function(entry, ctx)
-                        local kind = require("cmp.types").lsp.CompletionItemKind[entry:get_kind()]
-                        if kind == "Text" then
-                            return false
-                        end
-                        return true
+            list = {
+                selection = { preselect = true, auto_insert = true },  -- Changed to table format
+            },
+        },
+        
+        sources = {
+            default = { "lsp", "path", "buffer" },
+            providers = {
+                lsp = {
+                    name = "LSP",
+                    module = "blink.cmp.sources.lsp",
+                    score_offset = 1000,
+                    transform_items = function(_, items)
+                        return vim.tbl_filter(function(item)
+                            return item.kind ~= require("blink.cmp.types").CompletionItemKind.Text
+                        end, items)
                     end,
                 },
-                { name = "path", priority = 300 },
-            }, {
-                { 
-                    name = "buffer",
-                    priority = 50,
-                    keyword_length = 4,
-                    option = {
-                        get_bufnrs = function()
-                            return { vim.api.nvim_get_current_buf() }
-                        end,
-                    },
-                    max_item_count = 5,
+                path = {
+                    name = "Path",
+                    module = "blink.cmp.sources.path",
+                    score_offset = 300,
                 },
-            }),
-        })
-    end
+                buffer = {
+                    name = "Buffer",
+                    module = "blink.cmp.sources.buffer",
+                    score_offset = 50,
+                    min_keyword_length = 4,
+                    max_items = 5,
+                },
+            },
+        },
+    },
 }

@@ -4,23 +4,25 @@ return {
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
         "seblj/roslyn.nvim",
+        "saghen/blink.cmp",
     },
     config = function()
-        -- Setup Mason with custom registry for Roslyn
+         -- Setup Mason with custom registry for Roslyn
         require("mason").setup({
             registries = {
                 "github:mason-org/mason-registry",
                 "github:Crashdummyy/mason-registry",
             },
         })
-        require("mason-lspconfig").setup({
-            ensure_installed = { "ts_ls" },
-        })
         
-	-- Get capabilities for nvim-cmp
-	local capabilities = require("cmp_nvim_lsp").default_capabilities()
-	capabilities.textDocument.completion.completionItem.snippetSupport = true
+	require("mason-lspconfig").setup({
+	    ensure_installed = { "ts_ls", },
+	})
 
+        -- Get capabilities for blink.cmp
+        local capabilities = require("blink.cmp").get_lsp_capabilities()
+        capabilities.textDocument.completion.completionItem.snippetSupport = true
+        
         -- Setup TypeScript/JavaScript LSP using the new API
         vim.lsp.config("ts_ls", {
             capabilities = capabilities,
