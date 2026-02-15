@@ -9,11 +9,11 @@ return {
       json = { "biome" },
       jsonc = { "biome" },
       
-      -- C# formatting
       cs = { "csharpier" },
+
+      zig = { "zigfmt" },
     },
 
-    -- Format on save
     format_on_save = {
       timeout_ms = 3000,
       lsp_format = "fallback",

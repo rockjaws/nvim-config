@@ -7,7 +7,7 @@ return {
   end,
   opts = {
     ensure_installed = { 
-      'typescript', 'javascript', 'c_sharp', 'lua', 'tsx', 'vim', 'vimdoc', 'query' 
+      'typescript', 'javascript', 'c_sharp', 'zig', 'lua', 'tsx', 'vim', 'vimdoc', 'query' 
     },
     highlight = { enable = true },
   },

@@ -3,13 +3,14 @@ return {
     dependencies = "rafamadriz/friendly-snippets",
     version = "*",
     opts = {
-        keymap = {
-            preset = "default",
-            ["<CR>"] = { "accept", "fallback" },
-            ["<Tab>"] = { "select_next", "fallback" },
-            ["<S-Tab>"] = { "select_prev", "fallback" },
-        },
-        
+	keymap = {
+	    preset = "default",
+	    ["<CR>"] = { "accept", "fallback" },
+	    ["<C-y>"] = { "show", "show_documentation", "hide_documentation" },
+	    ["<Tab>"] = { "select_next", "fallback" },
+	    ["<S-Tab>"] = { "select_prev", "fallback" },
+	},
+
         appearance = {
             use_nvim_cmp_as_default = true,
             nerd_font_variant = "mono",
@@ -34,8 +35,8 @@ return {
                 },
             },
             list = {
-                selection = { preselect = true, auto_insert = true },  -- Changed to table format
-            },
+                selection = { preselect = true, auto_insert = true },            
+	    },
         },
         
         sources = {
