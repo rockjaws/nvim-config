@@ -9,6 +9,8 @@ return {
 	    ["<C-y>"] = { "show", "show_documentation", "hide_documentation" },
 	    ["<Tab>"] = { "select_next", "fallback" },
 	    ["<S-Tab>"] = { "select_prev", "fallback" },
+	    ["<C-Down>"] = { "scroll_documentation_down", "fallback" },
+	    ["<C-Up>"] = { "scroll_documentation_up", "fallback" },
 	},
 
         appearance = {
@@ -37,8 +39,7 @@ return {
             list = {
                 selection = { preselect = true, auto_insert = true },            
 	    },
-        },
-        
+        }, 
         sources = {
             default = { "lsp", "path", "buffer" },
             providers = {

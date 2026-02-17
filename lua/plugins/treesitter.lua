@@ -3,7 +3,7 @@ return {
   build = ':TSUpdate',
   lazy = false,
   init = function()
-    vim.env.CC = 'gcc'
+    vim.env.CC = 'gcc' 
   end,
   opts = {
     ensure_installed = { 
