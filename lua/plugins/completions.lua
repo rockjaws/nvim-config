@@ -13,59 +13,66 @@ return {
 	    ["<C-Up>"] = { "scroll_documentation_up", "fallback" },
 	},
 
-        appearance = {
-            use_nvim_cmp_as_default = true,
-            nerd_font_variant = "mono",
-        },
-        
-        completion = {
-            accept = {
-                auto_brackets = {
-                    enabled = true,
-                },
-            },
-            menu = {
-                max_height = 10,
-                border = "rounded",
-                scrollbar = true,
-            },
-            documentation = {
-                auto_show = true,
-                auto_show_delay_ms = 200,
-                window = {
-                    border = "rounded",
-                },
-            },
-            list = {
-                selection = { preselect = true, auto_insert = true },            
+	appearance = {
+	    use_nvim_cmp_as_default = true,
+	    nerd_font_variant = "mono",
+	},
+
+	signature = {
+	    enabled = true,
+	    window = {
+		border = "rounded",  
 	    },
-        }, 
-        sources = {
-            default = { "lsp", "path", "buffer" },
-            providers = {
-                lsp = {
-                    name = "LSP",
-                    module = "blink.cmp.sources.lsp",
-                    score_offset = 1000,
-                    transform_items = function(_, items)
-                        return vim.tbl_filter(function(item)
-                            return item.kind ~= require("blink.cmp.types").CompletionItemKind.Text
-                        end, items)
-                    end,
-                },
-                path = {
-                    name = "Path",
-                    module = "blink.cmp.sources.path",
-                    score_offset = 300,
-                },
-                buffer = {
-                    name = "Buffer",
-                    module = "blink.cmp.sources.buffer",
-                    score_offset = 50,
-                    min_keyword_length = 4,
-                    max_items = 5,
-                },
-            },
-        },
+	},
+
+	completion = {
+	    accept = {
+		auto_brackets = {
+		    enabled = true,
+		},
+	    },
+	    menu = {
+		max_height = 10,
+		border = "rounded",
+		scrollbar = true,
+	    },
+	    documentation = {
+		auto_show = true,
+		auto_show_delay_ms = 200,
+		window = {
+		    border = "rounded",
+		},
+	    },
+	    list = {
+		selection = { preselect = true, auto_insert = true },            
+	    },
+	}, 
+	sources = {
+	    default = { "lsp", "path", "buffer" },
+	    providers = {
+		lsp = {
+		    name = "LSP",
+		    module = "blink.cmp.sources.lsp",
+		    score_offset = 1000,
+		    transform_items = function(_, items)
+			return vim.tbl_filter(function(item)
+			    return item.kind ~= require("blink.cmp.types").CompletionItemKind.Text
+			end, items)
+		    end,
+		},
+		path = {
+		    name = "Path",
+		    module = "blink.cmp.sources.path",
+		    score_offset = 300,
+		},
+		buffer = {
+		    name = "Buffer",
+		    module = "blink.cmp.sources.buffer",
+		    score_offset = 50,
+		    min_keyword_length = 4,
+		    max_items = 5,
+		},
+	    },
+	},
     },
 }
